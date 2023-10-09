@@ -6,26 +6,32 @@ public class EmployeeBook {
         this.employees = new Employee[10];
     }
 
-    public void addEmployee(String fullName, int department, int salary) {
+    public void addEmployee(Employee employee) {
         if (countId >= employees.length) {
             throw new ArrayIndexOutOfBoundsException("Штат компании укомплектован");
         }
-        Employee newEmployee = new Employee(fullName, department, salary);
-        employees[countId++] = newEmployee;
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i] == null) {
+                employees[countId++] = employee;
+                break;
+            }
+        }
+
     }
 
-    public void printAllEmploee() {
+
+    public void printAllEmployee() {
         for (int i = 0; i < countId; i++) {
             Employee employee = employees[i];
-            System.out.println(employee.toString());
+            System.out.println(employee);
         }
     }
 
-    public void findEmploee(String fullName) {
-        for (int i = 0; i < countId; i++) {
+    public void findEmployee(String fullName) {
+        for (int i = 0; i < employees.length; i++) {
             Employee employee = employees[i];
             if (employee.getFullName().equals(fullName)) {
-                System.out.println(employee.getFullName() + " => " + employee.getDepartment() + " => " + employee.getSalary());
+                System.out.println(employee);
             }
         }
     }
@@ -34,31 +40,35 @@ public class EmployeeBook {
         for (int i = 0; i < countId; i++) {
             Employee employee = employees[i];
             if (employee.getSalary() == salary) {
-                System.out.println(employee.getFullName() + " => " + employee.getDepartment() + " => " + salary);
+                System.out.println(employee);
             }
         }
     }
 
-    public int findMaxSalary() {
+    public Employee findMaxSalary() {
         int maxSalary = employees[0].getSalary();
+        Employee employeeWithMaxSalary = null;
         for (int i = 0; i < countId; i++) {
             Employee employee = employees[i];
             if (employee.getSalary() >= maxSalary) {
                 maxSalary = employee.getSalary();
+                employeeWithMaxSalary = employee;
             }
         }
-        return maxSalary;
+        return employeeWithMaxSalary;
     }
 
-    public int findMinSalary() {
+    public Employee findMinSalary() {
         int minSalary = employees[0].getSalary();
+        Employee employeeWithMinSalary = null;
         for (int i = 0; i < countId; i++) {
             Employee employee = employees[i];
             if (employee.getSalary() <= minSalary) {
                 minSalary = employee.getSalary();
+                employeeWithMinSalary = employee;
             }
         }
-        return minSalary;
+        return employeeWithMinSalary;
     }
 
     public int amountOfCosts() {
@@ -90,7 +100,7 @@ public class EmployeeBook {
         for (int i = 0; i < countId; i++) {
             Employee employee = employees[i];
             if (employee.getDepartment() == department) {
-                System.out.println(employee.getFullName() + " =>" + employee.getSalary());
+                System.out.println(employee);
             }
         }
     }
@@ -107,6 +117,7 @@ public class EmployeeBook {
         }
         findSalary(max);
     }
+
 
     public void findMinSalaryInDepartment(int department) {
         int min = employees[0].getSalary();
@@ -161,7 +172,7 @@ public class EmployeeBook {
         for (int i = 0; i < countId; i++) {
             Employee employee = employees[i];
             if (salary >= employee.getSalary()) {
-                System.out.println(i + 1 + " Ф.И.О " + employee.getFullName() + " =>" + employee.getSalary());
+                System.out.println(employee);
             }
         }
     }
@@ -170,22 +181,53 @@ public class EmployeeBook {
         for (int i = 0; i < countId; i++) {
             Employee employee = employees[i];
             if (salary < employee.getSalary()) {
-                System.out.println(i + 1 + " Ф.И.О " + employee.getFullName() + " => " + employee.getSalary());
+                System.out.println(employee);
             }
         }
     }
+
+    public void removeEmployee(String fullName) {
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getFullName().equals(fullName)) {
+                System.out.println(employees[i].getFullName() + " удален");
+                System.arraycopy(employees, i + 1, employees, i, countId - i - 1);
+                employees[countId - 1] = null;
+                countId--;
+                return;
+            }
+        }
+    }
+    public void changeEmployeeDataSalary (String fullName, int salary){
+        for (int i = 0; i < employees.length; i++) {
+            Employee employee = employees[i];
+            if(employee.getFullName().equals(fullName)){
+                employee.setSalary(salary);
+                System.out.println(employee);
+            }
+        }
+    }
+    public void changeEmployeeDataDepartment (String fullName, int department){
+        for (int i = 0; i < employees.length; i++) {
+            Employee employee = employees[i];
+            if(employee.getFullName().equals(fullName)){
+                employee.setDepartment(department);
+                System.out.println(employee);
+            }
+        }
+    }
+
     public static EmployeeBook getEmployeeBook() {
         EmployeeBook employeeBook = new EmployeeBook();
-        employeeBook.addEmployee("Музафаров Петр Евгеньевич", 1, 90_000);
-        employeeBook.addEmployee("Щербакова Ольга Александровна", 2, 78_000);
-        employeeBook.addEmployee("Князевская Марина Сергеевна", 2, 79_000);
-        employeeBook.addEmployee("Мысин Александр Сергеевич", 1, 60_000);
-        employeeBook.addEmployee("Ветчанин Роман Алексеевич", 2, 65_000);
-        employeeBook.addEmployee("Назарова Наталья Александровна", 3, 50_000);
-        employeeBook.addEmployee("Курьяков Павел Владимирович", 5, 150_000);
-        employeeBook.addEmployee("Горюнова Елена Сергеевна", 4, 76_000);
-        employeeBook.addEmployee("Рэдман Александра Андреевна", 3, 450_000);
-        employeeBook.addEmployee("Машарская Светлана Николаевна", 2, 69_000);
+        employeeBook.addEmployee(new Employee("Бродова Светлана Викторовна", 1, 90_000));
+        employeeBook.addEmployee(new Employee("Музафаров Петр Евгеньевич", 1, 90_000));
+        employeeBook.addEmployee(new Employee("Князевская Марина Сергеевна", 2, 79_000));
+        employeeBook.addEmployee(new Employee("Мысин Александр Сергеевич", 1, 60_000));
+        employeeBook.addEmployee(new Employee("Ветчанин Роман Алексеевич", 2, 65_000));
+        employeeBook.addEmployee(new Employee("Назарова Наталья Александровна", 3, 50_000));
+        employeeBook.addEmployee(new Employee("Курьяков Павел Владимирович", 5, 150_000));
+        employeeBook.addEmployee(new Employee("Горюнова Елена Сергеевна", 4, 76_000));
+        employeeBook.addEmployee(new Employee("Рэдман Александра Андреевна", 3, 450_000));
+        employeeBook.addEmployee(new Employee("Машарская Светлана Николаевна", 2, 69_000));
         return employeeBook;
     }
 }

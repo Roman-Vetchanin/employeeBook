@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Main {
 
     public static void main (String[] args) {
@@ -23,31 +25,40 @@ public class Main {
         */
         EmployeeBook employeeBook = EmployeeBook.getEmployeeBook();
         System.out.println(employeeBook.getCountId());
-        System.out.println("+++++++++++++");
-        employeeBook.printAllEmploee();
-        System.out.println("+++++++++++++");
-        employeeBook.findEmploee("Музафаров Петр Евгеньевич");
-        System.out.println("+++++++++++++");
-        employeeBook.findSalary(employeeBook.findMaxSalary());
-        employeeBook.findSalary(employeeBook.findMinSalary());
-        System.out.println("+++++++++++++");
+        System.out.println("++++++ID++++++++");
+        employeeBook.printAllEmployee();
+        System.out.println("+++++++++Список++++++++");
+        employeeBook.findEmployee("Музафаров Петр Евгеньевич");
+        System.out.println("+++++++++Поиск+++++++++");
+        System.out.println(employeeBook.findMaxSalary());
+        System.out.println(employeeBook.findMinSalary());
+        System.out.println("+++++++++Max/Min salary++++++++++");
         System.out.println("Сумма затрат на ЗП в месяц: "+ employeeBook.amountOfCosts());
         System.out.println("Средняя зарплата: "+ employeeBook.averageSalary());
-        System.out.println("++++++++++++");
-        employeeBook.findMaxSalaryInDepartment(2);
+        System.out.println("+++++++++Общие затраты + средняя+++++++++++");
+        employeeBook.findMaxSalaryInDepartment(3);
         employeeBook.findMinSalaryInDepartment(2);
-        System.out.println("+++++++++++");
+        System.out.println("+++++++++Max/Min по отделу++++++++");
         System.out.println("Сумма затрат на ЗП по отделу "+ employeeBook.amountOfCostsInDepartment(3));
         System.out.println("Средняя зарплата по отделу: "+ employeeBook.averageSalaryDepartment(5));
         employeeBook.salaryIndexationInDepartment(9, 2);
-        System.out.println("+++++++++++++");
+        System.out.println("+++++++Общие затраты по отделу, средняя по отделу+++++++");
         employeeBook.salaryIndexation(3);
-        employeeBook.printAllEmploee();
-        System.out.println("+++++++++++++");
+        employeeBook.printAllEmployee();
+        System.out.println("Индексация у всех + список");
         employeeBook.findDepartmentEmployees(2);
-        System.out.println("+++++++++++++");
+        System.out.println("++++индексация по отделу+++++++");
         employeeBook.salaryRangeIsSmaller(90_000);
-        System.out.println("+++++++++++++");
+        System.out.println("+++++++диапазон поиска боьше/меньше по ЗП+++++++");
         employeeBook.salaryRangeIsLarger(90_000);
+        System.out.println("+++++++удаление сотрудника++++++++");
+        employeeBook.removeEmployee("Машарская Светлана Николаевна");
+        employeeBook.addEmployee(new Employee("Щербакова Ольга Александровна",2,81_000));
+        employeeBook.printAllEmployee();
+        System.out.println("++++++++Изменене зп сотрудника++++++");
+        employeeBook.changeEmployeeDataSalary("Ветчанин Роман Алексеевич", 81_000);
+        System.out.println("++++++Изменение отдела сотрудника++++++++");
+        employeeBook.changeEmployeeDataDepartment("Ветчанин Роман Алексеевич", 1);
+        System.out.println("++++++++Сотрудники в отделе++++++++++++");
     }
 }
