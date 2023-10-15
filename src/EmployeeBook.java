@@ -45,6 +45,7 @@ public class EmployeeBook {
         }
     }
 
+
     public Employee findMaxSalary() {
         int maxSalary = employees[0].getSalary();
         Employee employeeWithMaxSalary = null;
@@ -212,6 +213,17 @@ public class EmployeeBook {
             if(employee.getFullName().equals(fullName)){
                 employee.setDepartment(department);
                 System.out.println(employee);
+            }
+        }
+    }
+
+    public void printTeam() {
+        for (int i = 1; i <=5 ; i++) {
+            System.out.println("Team "+i+" : ");
+            for (Employee employee:employees) {
+                if (employee.getDepartment() == i) {
+                    System.out.println("\t "+ employee.getId()+" "+ employee.getFullName()+" "+employee.getSalary());
+                }
             }
         }
     }
